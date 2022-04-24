@@ -1,0 +1,13 @@
+type Mutation {
+  # Auth Mutations
+  signup(data: SignupUserInput!): UserPayload!
+  login(data: LoginUserInput!): UserPayload!
+  refreshToken: UserPayload!
+  logout: Boolean!
+
+  # Users Mutations
+  updateProfile(data: UpdateProfileInput!): UserPayload!
+  updateEmail(data: UpdateEmailInput): UserPayload!
+  updatePassword(data: UpdatePasswordInput): UserPayload!
+  deleteAccount: DeleteAccountPayload!
+}

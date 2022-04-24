@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package device;
+
+import "commons.proto";
+
+message Device {
+  string id = 1;
+  string device = 2;
+  bool enabled = 3;
+  string createdAt = 4;
+  string updatedAt = 5;
+}
+
+message ScheduleEdge {
+  Device node = 1;
+  string cursor = 2;
+}
+
+message CreateScheduleInput {
+  string device = 2;
+}
+
+message UpdateScheduleInput {
+  string id = 1;
+  Schedule data = 2;
+}
+
+message FindSchedulePayload {
+  repeated ScheduleEdge edges = 1;
+  commons.PageInfo pageInfo = 2;
+}
+
+service ScheduleService {
+  rpc find (commons.Query) returns (FindSchedulePayload) {}
+  rpc findById (commons.Id) returns (Schedule) {}
+  rpc findOne (commons.Query) returns (Schedule) {}
+  rpc count (commons.Query) returns (commons.Count) {}
+  rpc create (CreateScheduleInput) returns (Schedule) {}
+  rpc update (UpdateScheduleInput) returns (Schedule) {}
+  rpc destroy (commons.Query) returns (commons.Count) {}
+}

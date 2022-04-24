@@ -1,0 +1,15 @@
+*.lock
+*.log
+\.build
+\.cache
+\.editorconfig
+.env
+\.git
+\.gitignore
+\.ignore
+\.prettierignore
+\.reports
+src/data
+src/assets/mail
+src/certificates
+node_modules

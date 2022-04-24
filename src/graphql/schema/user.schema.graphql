@@ -1,0 +1,66 @@
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: EmailAddress!
+  password: String!
+  photo: String!
+  isVerified: Boolean!
+  isActive: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  version: Int!
+}
+
+type UsersConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+type UserPayload {
+  errors: [ErrorPayload]
+  user: User
+}
+
+type DeleteAccountPayload {
+  errors: [ErrorPayload]
+  count: Int
+}
+
+input SignupUserInput {
+  firstName: String!
+  lastName: String!
+  email: EmailAddress!
+  password: String!
+}
+
+input LoginUserInput {
+  email: EmailAddress!
+  password: String!
+}
+
+input UpdateProfileInput {
+  firstName: String!
+  lastName: String!
+  email: EmailAddress!
+  photo: String!
+  isVerified: Boolean!
+  isActive: Boolean!
+}
+
+input UpdateEmailInput {
+  email: EmailAddress!
+  currentPassword: String!
+}
+
+input UpdatePasswordInput {
+  currentPassword: String!
+  newPassword: String!
+  confirmPassword: String!
+}
