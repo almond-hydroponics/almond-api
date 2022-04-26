@@ -5,8 +5,6 @@ import { Resolver, Args, Parent, ResolveField } from '@nestjs/graphql';
 import { isEmpty, merge } from 'lodash';
 import { PinoLogger } from 'nestjs-pino';
 
-import { User } from '../graphql/typings';
-
 import { QueryUtils } from '../utils/query.utils';
 
 @Resolver('User')

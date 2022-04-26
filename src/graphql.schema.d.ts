@@ -19,12 +19,12 @@ export interface LoginUserInput {
 }
 
 export interface UpdateProfileInput {
-	firstName: string;
-	lastName: string;
-	email: EmailAddress;
-	photo: string;
-	isVerified: boolean;
-	isActive: boolean;
+	firstName?: Nullable<string>;
+	lastName?: Nullable<string>;
+	email?: Nullable<EmailAddress>;
+	photo?: Nullable<string>;
+	isVerified?: Nullable<boolean>;
+	isActive?: Nullable<boolean>;
 }
 
 export interface UpdateEmailInput {
@@ -92,14 +92,15 @@ export interface User {
 	photo: string;
 	isVerified: boolean;
 	isActive: boolean;
-	createdAt: DateTime;
-	updatedAt: DateTime;
+	createdAt: Date;
+	updatedAt: Date;
 	version: number;
 }
 
 export interface UsersConnection {
 	edges: UserEdge[];
 	pageInfo: PageInfo;
+	totalCount: number;
 }
 
 export interface UserEdge {

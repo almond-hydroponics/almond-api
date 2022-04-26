@@ -8,7 +8,7 @@ import { get } from 'lodash';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
 import { IUsersService } from '../users/users.interface';
-import { User } from '../graphql/typings';
+import { User } from '../graphql.schema';
 
 @Injectable()
 export class JwtStrategy

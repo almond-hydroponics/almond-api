@@ -8,14 +8,15 @@ type User {
   photo: String!
   isVerified: Boolean!
   isActive: Boolean!
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: Date!
+  updatedAt: Date!
   version: Int!
 }
 
 type UsersConnection {
   edges: [UserEdge!]!
   pageInfo: PageInfo!
+  totalCount: Int!
 }
 
 type UserEdge {
@@ -46,12 +47,12 @@ input LoginUserInput {
 }
 
 input UpdateProfileInput {
-  firstName: String!
-  lastName: String!
-  email: EmailAddress!
-  photo: String!
-  isVerified: Boolean!
-  isActive: Boolean!
+  firstName: String
+  lastName: String
+  email: EmailAddress
+  photo: String
+  isVerified: Boolean
+  isActive: Boolean
 }
 
 input UpdateEmailInput {

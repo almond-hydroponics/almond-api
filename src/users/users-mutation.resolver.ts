@@ -5,18 +5,18 @@ import { PinoLogger } from 'nestjs-pino';
 import { lastValueFrom } from 'rxjs';
 
 import { IUsersService } from './users.interface';
-import {
-	User,
-	UserPayload,
-	UpdateProfileInput,
-	UpdateEmailInput,
-	UpdatePasswordInput,
-	DeleteAccountPayload,
-} from '../graphql/typings';
 
 import { PasswordUtils } from '../utils/password.utils';
 import { GqlAuthGuard } from '../auth/gql-auth.guard';
 import { CurrentUser } from '../auth/user.decorator';
+import {
+	DeleteAccountPayload,
+	UpdateEmailInput,
+	UpdatePasswordInput,
+	UpdateProfileInput,
+	User,
+	UserPayload,
+} from '../graphql.schema';
 
 @Resolver()
 export class UsersMutationResolver implements OnModuleInit {
@@ -40,7 +40,7 @@ export class UsersMutationResolver implements OnModuleInit {
 	@UseGuards(GqlAuthGuard)
 	async updateProfile(
 		@CurrentUser() user: User,
-		@Args('data') data: UpdateProfileInput,
+		@Args('data') data: Partial<UpdateProfileInput>,
 	): Promise<UserPayload> {
 		const updatedUser: User = await lastValueFrom(
 			this.usersService.update({

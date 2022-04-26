@@ -10,15 +10,15 @@ import { RefreshAuthGuard } from './refresh-auth.guard';
 import { CurrentUser } from './user.decorator';
 
 import { IUsersService } from '../users/users.interface';
-import {
-	User,
-	SignupUserInput,
-	UserPayload,
-	LoginUserInput,
-} from '../graphql/typings';
 
 import { PasswordUtils } from '../utils/password.utils';
 import { lastValueFrom } from 'rxjs';
+import {
+	LoginUserInput,
+	SignupUserInput,
+	User,
+	UserPayload,
+} from '../graphql.schema';
 
 @Resolver()
 export class AuthResolver implements OnModuleInit {

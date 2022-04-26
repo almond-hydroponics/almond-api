@@ -25,7 +25,7 @@ async function main() {
 	});
 
 	app.use(cookieParser());
-	process.env.NODE_ENV === "production" && app.use(helmet());
+	process.env.NODE_ENV === 'production' && app.use(helmet());
 	// app.use(csurf());
 
 	app.useLogger(app.get(Logger));

@@ -10,7 +10,7 @@ export class UserDto {
 	readonly lastName?: string;
 
 	@IsEmail()
-	readonly email?: string;
+	readonly email?: string | unknown;
 
 	@IsString()
 	@MinLength(8)

@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PinoLogger } from 'nestjs-pino';
 
-import { User } from '../graphql/typings';
+import { User } from '../graphql.schema';
 
 @Injectable()
 export class AuthService {

@@ -1,5 +1,7 @@
 scalar DateTime
 
+scalar Date
+
 scalar EmailAddress
 
 scalar UnsignedInt

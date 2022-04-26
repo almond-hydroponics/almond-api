@@ -38,6 +38,7 @@ message UpdateUserInput {
 message FindUsersPayload {
   repeated UserEdge edges = 1;
   commons.PageInfo pageInfo = 2;
+  int32 totalCount = 3;
 }
 
 service UsersService {

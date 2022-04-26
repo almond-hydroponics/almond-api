@@ -3,10 +3,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import Redis, { RedisOptions } from 'ioredis';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
+import { DateScalar } from './scalars/date.scalar';
 
 @Module({
 	imports: [ConfigModule],
 	providers: [
+		DateScalar,
 		{
 			provide: 'PubSubService',
 			useFactory: async (
@@ -29,4 +31,4 @@ import { RedisPubSub } from 'graphql-redis-subscriptions';
 	],
 	exports: ['PubSubService'],
 })
-export class CommonsModule {}
+export class CommonModule {}

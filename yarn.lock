@@ -2445,6 +2445,7 @@ __metadata:
     "@types/passport-jwt": 3.0.6
     "@typescript-eslint/eslint-plugin": 5.20.0
     "@typescript-eslint/parser": 5.20.0
+    apollo-server-cache-redis: ^3.3.1
     apollo-server-express: 3.6.7
     bcryptjs: 2.4.3
     class-transformer: ^0.5.1
@@ -2463,7 +2464,7 @@ __metadata:
     graphql-scalars: 1.17.0
     graphql-subscriptions: 2.0.0
     graphql-tools: 8.2.8
-    graphql-type-json: 0.3.2
+    graphql-type-json: ^0.3.2
     grpc: ^1.24.11
     helmet: ^5.0.2
     ioredis: ^5.0.4
@@ -2503,6 +2504,18 @@ __metadata:
   dependencies:
     "@apollo/protobufjs": 1.2.2
   checksum: 1933affb1640d5905e29f8a41becdba1981effd767660748517ea1d4ef30db4c6789b17eba02f11dafd29b46b56d95cd15cbc3eb319d0a90affbdd0f2d168473
+  languageName: node
+  linkType: hard
+
+"apollo-server-cache-redis@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "apollo-server-cache-redis@npm:3.3.1"
+  dependencies:
+    apollo-server-caching: ^3.3.0
+    apollo-server-env: ^4.2.1
+    dataloader: ^2.0.0
+    ioredis: ^4.17.3
+  checksum: dd273ea768048b3aa3189c35c1eea1807eef6ac8c0eee5fba33e612292aee186e87565394f660194a0bad343db4c66ce1b299c6d3432e14b80e526cbdba212fe
   languageName: node
   linkType: hard
 
@@ -3699,6 +3712,13 @@ __metadata:
     whatwg-mimetype: ^2.3.0
     whatwg-url: ^8.0.0
   checksum: 97caf828aac25e25e04ba6869db0f99c75e6859bb5b424ada28d3e7841941ebf08ddff3c1b1bb4585986bd507a5d54c2a716853ea6cb98af877400e637393e71
+  languageName: node
+  linkType: hard
+
+"dataloader@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "dataloader@npm:2.1.0"
+  checksum: bbd43496c41697766f8611f60ed3bae437b450985499140b9603a2447c10d45975d3a0661caaebaa9750bc1bc9fd154676a314423294916c8b8ca1a59a08d139
   languageName: node
   linkType: hard
 
@@ -5110,7 +5130,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-type-json@npm:0.3.2":
+"graphql-type-json@npm:^0.3.2":
   version: 0.3.2
   resolution: "graphql-type-json@npm:0.3.2"
   peerDependencies:

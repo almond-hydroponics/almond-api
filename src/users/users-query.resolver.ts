@@ -7,7 +7,7 @@ import { PinoLogger } from 'nestjs-pino';
 import { lastValueFrom } from 'rxjs';
 
 import { IUsersService } from './users.interface';
-import { User, UsersConnection } from '../graphql/typings';
+import { User, UsersConnection } from '../graphql.schema';
 
 import { QueryUtils } from '../utils/query.utils';
 import { GqlAuthGuard } from '../auth/gql-auth.guard';

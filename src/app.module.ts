@@ -2,7 +2,7 @@ import { join } from 'path';
 
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { GraphQLModule, GqlModuleOptions } from '@nestjs/graphql';
+import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 import { LoggerModule, PinoLogger } from 'nestjs-pino';
@@ -14,10 +14,11 @@ import {
 } from 'graphql-scalars';
 import { GraphQLJSONObject } from 'graphql-type-json';
 
-import { playgroundQuery } from './graphql/playground-query';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
-import { upperDirectiveTransformer } from './commons/directives/upper-case.directive';
+import { CommonModule } from './common/common.module';
+import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
+import { RedisCache } from 'apollo-server-cache-redis';
 
 @Module({
 	imports: [
@@ -41,26 +42,44 @@ import { upperDirectiveTransformer } from './commons/directives/upper-case.direc
 			}),
 			inject: [ConfigService],
 		}),
-		GraphQLModule.forRoot<ApolloDriverConfig>({
+		GraphQLModule.forRootAsync<ApolloDriverConfig>({
 			driver: ApolloDriver,
-			typePaths: ['./**/*.graphql'],
-			transformSchema: (schema) => upperDirectiveTransformer(schema, 'upper'),
-			installSubscriptionHandlers: true,
-			resolvers: {
-				DateTime: DateTimeResolver,
-				EmailAddress: EmailAddressResolver,
-				UnsignedInt: UnsignedIntResolver,
-				JSONObject: GraphQLJSONObject,
-			},
-			cors: false,
-			playground: {
-				// endpoint: '/',
-				// subscriptionEndpoint: '/',
-				settings: {
-					'request.credentials': 'include',
+			imports: [ConfigModule, LoggerModule],
+			useFactory: async (
+				configService: ConfigService,
+				logger: PinoLogger,
+			) => ({
+				debug: configService.get<string>('NODE_ENV') !== 'development',
+				typePaths: ['./**/*.graphql'],
+				transformSchema: (schema) =>
+					upperDirectiveTransformer(schema, 'upper'),
+				installSubscriptionHandlers: true,
+				logger,
+				persistedQueries: configService.get<string>('NODE_ENV') ===
+					'development' && {
+					ttl: 1000,
+					cache: new RedisCache({
+						host: configService.get<string>('REDIS_HOST'),
+						port: configService.get<number>('REDIS_PORT'),
+					}),
 				},
-			},
-			context: ({ req, res }) => ({ req, res }),
+				cors: false,
+				resolvers: {
+					DateTime: DateTimeResolver,
+					EmailAddress: EmailAddressResolver,
+					UnsignedInt: UnsignedIntResolver,
+					JSONObject: GraphQLJSONObject,
+				},
+				formatResponse: (response) => response,
+				formatError: (error) => error,
+				introspection: true,
+				playground: configService.get<string>('NODE_ENV') === 'development',
+				definitions: {
+					path: join(process.cwd(), 'src/graphql.schema.d.ts'),
+				},
+				context: ({ req, res }) => ({ req, res }),
+			}),
+			inject: [ConfigService, PinoLogger],
 		}),
 		// GraphQLModule.forRootAsync<ApolloDriverConfig>({
 		// 	driver: ApolloDriver,
@@ -105,6 +124,7 @@ import { upperDirectiveTransformer } from './commons/directives/upper-case.direc
 		// }),
 		AuthModule,
 		UsersModule,
+		CommonModule,
 	],
 })
 export class AppModule {}
