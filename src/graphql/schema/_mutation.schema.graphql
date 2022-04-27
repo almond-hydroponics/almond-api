@@ -10,4 +10,9 @@ type Mutation {
   updateEmail(data: UpdateEmailInput): UserPayload!
   updatePassword(data: UpdatePasswordInput): UserPayload!
   deleteAccount: DeleteAccountPayload!
+
+  # Devices Mutations
+  createDevice(data: CreateDeviceInput!): DevicePayload!
+  updateDevice(id: ID!, data: UpdateDeviceInput!): DevicePayload!
+  deleteDevice(id: ID!): DeleteDevicePayload!
 }

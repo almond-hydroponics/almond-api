@@ -9,7 +9,7 @@ import { Logger } from 'nestjs-pino';
 
 import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser';
-import * as csurf from 'csurf';
+import { ExceptionFilter } from './_helpers';
 
 async function main() {
 	const app: NestExpressApplication =
@@ -26,8 +26,8 @@ async function main() {
 
 	app.use(cookieParser());
 	process.env.NODE_ENV === 'production' && app.use(helmet());
-	// app.use(csurf());
 
+	app.useGlobalFilters(new ExceptionFilter());
 	app.useLogger(app.get(Logger));
 
 	return app.listen(configService.get<number>('GRAPHQL_PORT'));

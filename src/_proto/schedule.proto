@@ -30,9 +30,10 @@ message UpdateScheduleInput {
 message FindSchedulePayload {
   repeated ScheduleEdge edges = 1;
   commons.PageInfo pageInfo = 2;
+  int32 totalCount = 3;
 }
 
-service ScheduleService {
+service SchedulesService {
   rpc find (commons.Query) returns (FindSchedulePayload) {}
   rpc findById (commons.Id) returns (Schedule) {}
   rpc findOne (commons.Query) returns (Schedule) {}

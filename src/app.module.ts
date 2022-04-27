@@ -2,9 +2,9 @@ import { join } from 'path';
 
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
+import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-
+import { RedisCache } from 'apollo-server-cache-redis';
 import { LoggerModule, PinoLogger } from 'nestjs-pino';
 
 import {
@@ -14,11 +14,11 @@ import {
 } from 'graphql-scalars';
 import { GraphQLJSONObject } from 'graphql-type-json';
 
+import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
-import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
-import { RedisCache } from 'apollo-server-cache-redis';
+import { DevicesModule } from './devices/devices.module';
 
 @Module({
 	imports: [
@@ -49,12 +49,14 @@ import { RedisCache } from 'apollo-server-cache-redis';
 				configService: ConfigService,
 				logger: PinoLogger,
 			) => ({
+				logger,
 				debug: configService.get<string>('NODE_ENV') !== 'development',
 				typePaths: ['./**/*.graphql'],
 				transformSchema: (schema) =>
 					upperDirectiveTransformer(schema, 'upper'),
-				installSubscriptionHandlers: true,
-				logger,
+				subscriptions: {
+					'graphql-ws': true,
+				},
 				persistedQueries: configService.get<string>('NODE_ENV') ===
 					'development' && {
 					ttl: 1000,
@@ -81,50 +83,10 @@ import { RedisCache } from 'apollo-server-cache-redis';
 			}),
 			inject: [ConfigService, PinoLogger],
 		}),
-		// GraphQLModule.forRootAsync<ApolloDriverConfig>({
-		// 	driver: ApolloDriver,
-		// 	imports: [LoggerModule],
-		// 	useFactory: async (logger: PinoLogger) => ({
-		// 		path: '/',
-		//     transformSchema: schema => upperDirectiveTransformer(schema, 'upper'),
-		//     // installSubscriptionHandlers: true,
-		// 		// subscriptions: '/',
-		// 		typePaths: ['./**/*.graphql'],
-		// 		resolvers: {
-		// 			DateTime: DateTimeResolver,
-		// 			EmailAddress: EmailAddressResolver,
-		// 			UnsignedInt: UnsignedIntResolver,
-		// 			JSONObject: GraphQLJSONObject,
-		// 		},
-		// 		definitions: {
-		// 			path: join(__dirname, 'graphql.ts'),
-		// 		},
-		// 		logger,
-		// 		debug: true,
-		// 		cors: false,
-		// 		installSubscriptionHandlers: true,
-		// 		playground: {
-		// 			// endpoint: '/',
-		// 			// subscriptionEndpoint: '/',
-		// 			settings: {
-		// 				'request.credentials': 'include',
-		//         codeTheme: 'light'
-		// 			},
-		// 			// tabs: [
-		// 			//   {
-		// 			//     name: 'GraphQL API',
-		// 			//     endpoint: '/',
-		// 			//     query: playgroundQuery
-		// 			//   }
-		// 			// ]
-		// 		},
-		// 		context: ({ req, res }): any => ({ req, res }),
-		// 	}),
-		// 	inject: [PinoLogger],
-		// }),
 		AuthModule,
 		UsersModule,
 		CommonModule,
+		DevicesModule,
 	],
 })
 export class AppModule {}

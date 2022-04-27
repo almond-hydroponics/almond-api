@@ -1,0 +1,41 @@
+
+type Device {
+  id: ID!
+  name: String!
+  isVerified: Boolean!
+  isActive: Boolean!
+  createdAt: Date!
+  updatedAt: Date!
+  version: Int!
+}
+
+type DevicesConnection {
+  edges: [DeviceEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type DeviceEdge {
+  node: Device!
+  cursor: String!
+}
+
+type DevicePayload {
+  errors: [ErrorPayload]
+  device: Device
+}
+
+type DeleteDevicePayload {
+  errors: [ErrorPayload]
+  count: Int
+}
+
+input CreateDeviceInput {
+  name: String!
+}
+
+input UpdateDeviceInput {
+  name: String
+  isVerified: Boolean
+  isActive: Boolean
+}
