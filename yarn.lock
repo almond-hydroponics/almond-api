@@ -1039,6 +1039,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nestjs/axios@npm:^0.0.7":
+  version: 0.0.7
+  resolution: "@nestjs/axios@npm:0.0.7"
+  dependencies:
+    axios: 0.26.0
+  peerDependencies:
+    "@nestjs/common": ^7.0.0 || ^8.0.0
+    reflect-metadata: ^0.1.12
+    rxjs: ^6.0.0 || ^7.0.0
+  checksum: e07a6606f1f4ad6d19e2c39531b29e16cb8d10a68dcf6c4d2204eb6d27c15f7aba5c2d43062e0d019fa06c6c79061e14bcafc3080b39862e1e87932162049982
+  languageName: node
+  linkType: hard
+
 "@nestjs/cli@npm:8.2.5":
   version: 8.2.5
   resolution: "@nestjs/cli@npm:8.2.5"
@@ -1274,6 +1287,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nestjs/schedule@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@nestjs/schedule@npm:1.1.0"
+  dependencies:
+    cron: 1.8.2
+    uuid: 8.3.2
+  peerDependencies:
+    "@nestjs/common": ^6.10.11 || ^7.0.0 || ^8.0.0
+    "@nestjs/core": ^7.0.0 || ^8.0.0
+    reflect-metadata: ^0.1.12
+  checksum: 382345a993e88f5a8a2f13ee7315c103ef4b4bf437af8c7b4fe4a35cdc0aae0a73e5d64a798561dd9534b52768fa4381752e94439b9320962a8e117b22cfb3f9
+  languageName: node
+  linkType: hard
+
 "@nestjs/schematics@npm:8.0.10, @nestjs/schematics@npm:^8.0.3":
   version: 8.0.10
   resolution: "@nestjs/schematics@npm:8.0.10"
@@ -1286,6 +1313,20 @@ __metadata:
   peerDependencies:
     typescript: ^3.4.5 || ^4.3.5
   checksum: 811fd64bc2dbef0d5d1d28f532dce94e1b6c2014b69d1a11f9b405c84fdf5b880a4b090cc017244d1e158d9d49f60deac9ff3cd04d91af1898d54465086df586
+  languageName: node
+  linkType: hard
+
+"@nestjs/terminus@npm:^8.0.6":
+  version: 8.0.6
+  resolution: "@nestjs/terminus@npm:8.0.6"
+  dependencies:
+    check-disk-space: 3.3.0
+  peerDependencies:
+    "@nestjs/common": 8.x
+    "@nestjs/core": 8.x
+    reflect-metadata: 0.1.x
+    rxjs: 7.x
+  checksum: 15e759c223789e199481e042856492cf7299202e22f0c846554dba6682180eb8ac7cceb8393a81bf908b3435132738ce37d484373ac04c6740004a6a934bcf8b
   languageName: node
   linkType: hard
 
@@ -2508,6 +2549,7 @@ __metadata:
     "@grpc/grpc-js": ^1.6.7
     "@grpc/proto-loader": 0.6.9
     "@nestjs/apollo": ^10.0.9
+    "@nestjs/axios": ^0.0.7
     "@nestjs/cli": 8.2.5
     "@nestjs/common": 8.4.4
     "@nestjs/config": 2.0.0
@@ -2518,7 +2560,9 @@ __metadata:
     "@nestjs/microservices": 8.4.4
     "@nestjs/passport": 8.2.1
     "@nestjs/platform-express": 8.4.4
+    "@nestjs/schedule": ^1.1.0
     "@nestjs/schematics": 8.0.10
+    "@nestjs/terminus": ^8.0.6
     "@nestjs/testing": 8.4.4
     "@types/bcryptjs": 2.4.2
     "@types/cookie-parser": ^1.4.3
@@ -2853,6 +2897,15 @@ __metadata:
   version: 1.0.0
   resolution: "atomic-sleep@npm:1.0.0"
   checksum: b95275afb2f80732f22f43a60178430c468906a415a7ff18bcd0feeebc8eec3930b51250aeda91a476062a90e07132b43a1794e8d8ffcf9b650e8139be75fa36
+  languageName: node
+  linkType: hard
+
+"axios@npm:0.26.0":
+  version: 0.26.0
+  resolution: "axios@npm:0.26.0"
+  dependencies:
+    follow-redirects: ^1.14.8
+  checksum: d7a8b898f4157bedeb2e06c03b16133b91b354c041205bea732ce58b7a21f373d22057b0eea0d482838145ce6ff482b359750d9bcb8dd19d45e3928e3c65c280
   languageName: node
   linkType: hard
 
@@ -3268,6 +3321,13 @@ __metadata:
   version: 0.7.0
   resolution: "chardet@npm:0.7.0"
   checksum: 6fd5da1f5d18ff5712c1e0aed41da200d7c51c28f11b36ee3c7b483f3696dabc08927fc6b227735eb8f0e1215c9a8abd8154637f3eff8cada5959df7f58b024d
+  languageName: node
+  linkType: hard
+
+"check-disk-space@npm:3.3.0":
+  version: 3.3.0
+  resolution: "check-disk-space@npm:3.3.0"
+  checksum: a4f5e06ed1b5b949b8a96c87263102b73683afd3da29434c11395d51ec73502455c32fdf62970fe981e72b933f7bfc47df596ed0375171295239487ea714a8b7
   languageName: node
   linkType: hard
 
@@ -3699,6 +3759,15 @@ __metadata:
   version: 1.1.1
   resolution: "create-require@npm:1.1.1"
   checksum: a9a1503d4390d8b59ad86f4607de7870b39cad43d929813599a23714831e81c520bddf61bcdd1f8e30f05fd3a2b71ae8538e946eb2786dc65c2bbc520f692eff
+  languageName: node
+  linkType: hard
+
+"cron@npm:1.8.2":
+  version: 1.8.2
+  resolution: "cron@npm:1.8.2"
+  dependencies:
+    moment-timezone: ^0.5.x
+  checksum: 9df2d2e24684e1ebce37e3e29c183b1dfecf7adb5fb16f84435014e7205926fc9868e9bfacfa5f7b93c556c9f4a6fbcce5fde9bee1306d20bc848568bb587791
   languageName: node
   linkType: hard
 
@@ -7127,6 +7196,22 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
+  languageName: node
+  linkType: hard
+
+"moment-timezone@npm:^0.5.x":
+  version: 0.5.34
+  resolution: "moment-timezone@npm:0.5.34"
+  dependencies:
+    moment: ">= 2.9.0"
+  checksum: 12a1d3d52e4ba509cf1fa36bbda59d898a08fa80ab35f6c358747e93aec1f07e617cec647eaf2e8acf5f9132e581d4704d34a9edffa9a80c5cd04bf23b277595
+  languageName: node
+  linkType: hard
+
+"moment@npm:>= 2.9.0":
+  version: 2.29.3
+  resolution: "moment@npm:2.29.3"
+  checksum: 2e780e36d9a1823c08a1b6313cbb08bd01ecbb2a9062095820a34f42c878991ccba53abaa6abb103fd5c01e763724f295162a8c50b7e95b4f1c992ef0772d3f0
   languageName: node
   linkType: hard
 

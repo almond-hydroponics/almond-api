@@ -15,10 +15,9 @@ import {
 import { GraphQLJSONObject } from 'graphql-type-json';
 
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
 import { CommonModule } from './common/common.module';
-import { DevicesModule } from './devices/devices.module';
+import { MicroservicesModules } from './modules';
+import { HealthModule } from './health/health.module';
 
 @Module({
 	imports: [
@@ -83,10 +82,9 @@ import { DevicesModule } from './devices/devices.module';
 			}),
 			inject: [ConfigService, PinoLogger],
 		}),
-		AuthModule,
-		UsersModule,
 		CommonModule,
-		DevicesModule,
+		HealthModule,
+		...MicroservicesModules,
 	],
 })
 export class AppModule {}

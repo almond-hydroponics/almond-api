@@ -9,9 +9,16 @@ import { Logger } from 'nestjs-pino';
 
 import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser';
-import { ExceptionFilter } from './_helpers';
+import * as csurf from 'csurf';
 
-async function main() {
+import { ExceptionFilter } from './_helpers';
+import { ValidationPipe } from '@nestjs/common';
+import { ExcludeNullInterceptor, TimeoutInterceptor } from './interceptors';
+import { csurfConfigOptions } from './security/configs';
+import { csrfMiddleware } from './security/middlewares';
+import { FrontendCookieGuard } from './security/guards';
+
+(async function main() {
 	const app: NestExpressApplication =
 		await NestFactory.create<NestExpressApplication>(
 			AppModule,
@@ -19,18 +26,30 @@ async function main() {
 		);
 	const configService: ConfigService = app.get(ConfigService);
 
+	app.useGlobalPipes(new ValidationPipe({ skipMissingProperties: true }));
+	app.useGlobalInterceptors(
+		new ExcludeNullInterceptor(),
+		new TimeoutInterceptor(),
+	);
+	app.useGlobalFilters(new ExceptionFilter());
+
+	const csrf = csurf(csurfConfigOptions);
+	app.use((req, res, next) => {
+		csrfMiddleware(req, res, next, csrf);
+	});
+	app.use(cookieParser(configService.get<string>('COOKIE_SECRET')));
+
 	app.enableCors({
 		origin: '*',
 		credentials: true,
 	});
 
-	app.use(cookieParser());
-	process.env.NODE_ENV === 'production' && app.use(helmet());
+	if (process.env.ENVIRONMENT === 'production') {
+		app.use(helmet());
+		app.useGlobalGuards(new FrontendCookieGuard());
+	}
 
-	app.useGlobalFilters(new ExceptionFilter());
 	app.useLogger(app.get(Logger));
 
 	return app.listen(configService.get<number>('GRAPHQL_PORT'));
-}
-
-main();
+})();
