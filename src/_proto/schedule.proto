@@ -8,8 +8,10 @@ message Schedule {
   string id = 1;
   string schedule = 2;
   string device = 3;
-  string createdAt = 4;
-  string updatedAt = 5;
+  bool active = 4;
+  string createdAt = 5;
+  string updatedAt = 6;
+  int32 version = 7;
 }
 
 message ScheduleEdge {

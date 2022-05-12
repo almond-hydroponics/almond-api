@@ -1,12 +1,12 @@
 import { Inject, OnModuleInit, UseGuards } from '@nestjs/common';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-import { Resolver, Args, Mutation, Context } from '@nestjs/graphql';
+import { Resolver, Args, Mutation, Context, Query } from '@nestjs/graphql';
 
 import { isEmpty } from 'lodash';
 import { PinoLogger } from 'nestjs-pino';
 
 import { AuthService } from './auth.service';
-import { RefreshAuthGuard } from './refresh-auth.guard';
+import { RefreshAuthGuard } from './guards/refresh-auth.guard';
 import { CurrentUser } from './user.decorator';
 
 import { IUsersService } from '../users/users.interface';
@@ -16,9 +16,11 @@ import { lastValueFrom } from 'rxjs';
 import {
 	LoginUserInput,
 	SignupUserInput,
+	SocialAuthInput,
 	User,
 	UserPayload,
 } from '../../graphql.schema';
+import deepClean from '../../utils/deep-clean';
 
 @Resolver()
 export class AuthResolver implements OnModuleInit {
@@ -37,6 +39,55 @@ export class AuthResolver implements OnModuleInit {
 	onModuleInit(): void {
 		this.usersService =
 			this.usersServiceClient.getService<IUsersService>('UsersService');
+	}
+
+	@Query(() => String)
+	async getGoogleAuthURL(): Promise<string> {
+		return this.authService.getGoogleAuthURL();
+	}
+
+	@Query(() => User)
+	async googleAuth(
+		@Args('input') input: SocialAuthInput,
+		@Context('context') context: any,
+	): Promise<UserPayload> {
+		const googleUser = await this.authService.getGoogleUser({
+			code: input.code,
+		});
+
+		const user = await lastValueFrom(
+			this.usersService.findOne({
+				where: JSON.stringify({ googleId: String(googleUser.id) }),
+			}),
+		);
+
+		if (isEmpty(user)) {
+			this.usersService.create({
+				...deepClean(googleUser),
+				firstName: googleUser.first_name,
+			});
+		}
+
+		const { res } = context;
+		res.cookie(
+			'access-token',
+			await this.authService.generateAccessToken(user),
+			{
+				httpOnly: true,
+				maxAge: 1.8e6,
+			},
+		);
+
+		res.cookie(
+			'refresh-token',
+			await this.authService.generateRefreshToken(user),
+			{
+				httpOnly: true,
+				maxAge: 1.728e8,
+			},
+		);
+
+		return { user };
 	}
 
 	@Mutation()

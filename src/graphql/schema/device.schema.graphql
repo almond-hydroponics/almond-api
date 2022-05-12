@@ -2,8 +2,10 @@
 type Device {
   id: ID!
   name: String!
-  isVerified: Boolean!
-  isActive: Boolean!
+  verified: Boolean!
+  active: Boolean!
+  user: User
+  schedules(q: String, first: Int, last: Int, before: String, after: String, filterBy: JSONObject, orderBy: String): SchedulesConnection
   createdAt: Date!
   updatedAt: Date!
   version: Int!
@@ -36,6 +38,7 @@ input CreateDeviceInput {
 
 input UpdateDeviceInput {
   name: String
-  isVerified: Boolean
-  isActive: Boolean
+  user: String
+  verified: Boolean
+  active: Boolean
 }

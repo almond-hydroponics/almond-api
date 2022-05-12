@@ -15,4 +15,9 @@ type Mutation {
   createDevice(data: CreateDeviceInput!): DevicePayload!
   updateDevice(id: ID!, data: UpdateDeviceInput!): DevicePayload!
   deleteDevice(id: ID!): DeleteDevicePayload!
+
+  # Schedules Mutations
+  createSchedule(data: CreateScheduleInput!): SchedulePayload!
+  updateSchedule(id: ID!, data: UpdateScheduleInput!): SchedulePayload!
+  deleteSchedule(id: ID!): DeleteSchedulePayload!
 }

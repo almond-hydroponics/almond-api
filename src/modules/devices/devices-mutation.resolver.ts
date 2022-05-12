@@ -5,13 +5,12 @@ import { Resolver, Args, Mutation } from '@nestjs/graphql';
 import { PinoLogger } from 'nestjs-pino';
 import { PubSub } from 'graphql-subscriptions';
 
-import { GqlAuthGuard } from '../auth/gql-auth.guard';
+import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
 
 import { IDevicesService } from './devices.interface';
 import { DeviceDto } from './device.dto';
 import {
 	DeleteDevicePayload,
-	Device,
 	DevicePayload,
 	UpdateDeviceInput,
 } from '../../graphql.schema';

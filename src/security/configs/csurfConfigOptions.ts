@@ -5,4 +5,5 @@ export const csurfConfigOptions = {
 		httpOnly: true,
 		secure: true,
 	},
+	ignoreMethods: ['GET'],
 };

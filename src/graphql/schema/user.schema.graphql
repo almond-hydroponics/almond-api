@@ -1,3 +1,8 @@
+enum Roles {
+  USER
+  DEVELOPER
+  ADMIN
+}
 
 type User {
   id: ID!
@@ -5,9 +10,12 @@ type User {
   lastName: String!
   email: EmailAddress!
   password: String!
-  photo: String!
-  isVerified: Boolean!
-  isActive: Boolean!
+  avatar: String!
+  googleId: String!
+  role: Roles!
+  verified: Boolean!
+  active: Boolean!
+  devices(q: String, first: Int, last: Int, before: String, after: String, filterBy: JSONObject, orderBy: String): DevicesConnection
   createdAt: Date!
   updatedAt: Date!
   version: Int!
@@ -34,6 +42,10 @@ type DeleteAccountPayload {
   count: Int
 }
 
+input SocialAuthInput {
+  code: String!
+}
+
 input SignupUserInput {
   firstName: String!
   lastName: String!
@@ -50,9 +62,9 @@ input UpdateProfileInput {
   firstName: String
   lastName: String
   email: EmailAddress
-  photo: String
-  isVerified: Boolean
-  isActive: Boolean
+  avatar: String
+  verified: Boolean
+  active: Boolean
 }
 
 input UpdateEmailInput {

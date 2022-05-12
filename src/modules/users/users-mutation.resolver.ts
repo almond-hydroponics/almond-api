@@ -7,7 +7,7 @@ import { lastValueFrom } from 'rxjs';
 import { IUsersService } from './users.interface';
 
 import { PasswordUtils } from '../../utils/password.utils';
-import { GqlAuthGuard } from '../auth/gql-auth.guard';
+import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
 import { CurrentUser } from '../auth/user.decorator';
 import {
 	DeleteAccountPayload,

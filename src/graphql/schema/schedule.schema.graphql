@@ -1,0 +1,40 @@
+type Schedule {
+  id: ID!
+  schedule: String!
+  device: Device!
+  active: Boolean!
+  createdAt: Date!
+  updatedAt: Date!
+  version: Int!
+}
+
+type SchedulesConnection {
+  edges: [ScheduleEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type ScheduleEdge {
+  node: Schedule!
+  cursor: String!
+}
+
+type SchedulePayload {
+  errors: [ErrorPayload]
+  schedule: Schedule
+}
+
+type DeleteSchedulePayload {
+  errors: [ErrorPayload]
+  count: Int
+}
+
+input CreateScheduleInput {
+  schedule: String!
+  device: String!
+}
+
+input UpdateScheduleInput {
+  schedule: String
+  active: Boolean
+}

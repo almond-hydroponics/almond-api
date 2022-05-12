@@ -7,11 +7,12 @@ import "commons.proto";
 message Device {
   string id = 1;
   string name = 2;
-  bool isVerified = 3;
-  bool isActive = 4;
-  string createdAt = 5;
-  string updatedAt = 6;
-  int32 version = 7;
+  string user = 3;
+  bool verified = 4;
+  bool active = 5;
+  string createdAt = 6;
+  string updatedAt = 7;
+  int32 version = 8;
 }
 
 message DeviceEdge {

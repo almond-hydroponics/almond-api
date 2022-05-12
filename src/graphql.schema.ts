@@ -7,14 +7,35 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export enum Roles {
+    USER = "USER",
+    DEVELOPER = "DEVELOPER",
+    ADMIN = "ADMIN"
+}
+
 export class CreateDeviceInput {
     name: string;
 }
 
 export class UpdateDeviceInput {
     name?: Nullable<string>;
-    isVerified?: Nullable<boolean>;
-    isActive?: Nullable<boolean>;
+    user?: Nullable<string>;
+    verified?: Nullable<boolean>;
+    active?: Nullable<boolean>;
+}
+
+export class CreateScheduleInput {
+    schedule: string;
+    device: string;
+}
+
+export class UpdateScheduleInput {
+    schedule?: Nullable<string>;
+    active?: Nullable<boolean>;
+}
+
+export class SocialAuthInput {
+    code: string;
 }
 
 export class SignupUserInput {
@@ -33,9 +54,9 @@ export class UpdateProfileInput {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     email?: Nullable<EmailAddress>;
-    photo?: Nullable<string>;
-    isVerified?: Nullable<boolean>;
-    isActive?: Nullable<boolean>;
+    avatar?: Nullable<string>;
+    verified?: Nullable<boolean>;
+    active?: Nullable<boolean>;
 }
 
 export class UpdateEmailInput {
@@ -71,6 +92,12 @@ export abstract class IMutation {
     abstract updateDevice(id: string, data: UpdateDeviceInput): DevicePayload | Promise<DevicePayload>;
 
     abstract deleteDevice(id: string): DeleteDevicePayload | Promise<DeleteDevicePayload>;
+
+    abstract createSchedule(data: CreateScheduleInput): SchedulePayload | Promise<SchedulePayload>;
+
+    abstract updateSchedule(id: string, data: UpdateScheduleInput): SchedulePayload | Promise<SchedulePayload>;
+
+    abstract deleteSchedule(id: string): DeleteSchedulePayload | Promise<DeleteSchedulePayload>;
 }
 
 export abstract class IQuery {
@@ -89,10 +116,22 @@ export abstract class IQuery {
     abstract deviceCount(q?: Nullable<string>, filterBy?: Nullable<JSONObject>): number | Promise<number>;
 
     abstract myDevice(q?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, before?: Nullable<string>, after?: Nullable<string>, filterBy?: Nullable<JSONObject>, orderBy?: Nullable<string>): Nullable<DevicesConnection> | Promise<Nullable<DevicesConnection>>;
+
+    abstract getGoogleAuthURL(): string | Promise<string>;
+
+    abstract googleAuth(input?: Nullable<SocialAuthInput>): UserPayload | Promise<UserPayload>;
+
+    abstract schedule(id: string): Schedule | Promise<Schedule>;
+
+    abstract schedules(q?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, before?: Nullable<string>, after?: Nullable<string>, filterBy?: Nullable<JSONObject>, orderBy?: Nullable<string>): Nullable<SchedulesConnection> | Promise<Nullable<SchedulesConnection>>;
+
+    abstract schedulesCount(q?: Nullable<string>, filterBy?: Nullable<JSONObject>): number | Promise<number>;
 }
 
 export abstract class ISubscription {
     abstract deviceAdded(): Device | Promise<Device>;
+
+    abstract scheduleAdded(): Device | Promise<Device>;
 }
 
 export class ErrorPayload {
@@ -110,8 +149,10 @@ export class PageInfo {
 export class Device {
     id: string;
     name: string;
-    isVerified: boolean;
-    isActive: boolean;
+    verified: boolean;
+    active: boolean;
+    user?: Nullable<User>;
+    schedules?: Nullable<SchedulesConnection>;
     createdAt: Date;
     updatedAt: Date;
     version: number;
@@ -138,15 +179,49 @@ export class DeleteDevicePayload {
     count?: Nullable<number>;
 }
 
+export class Schedule {
+    id: string;
+    schedule: string;
+    device: Device;
+    active: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    version: number;
+}
+
+export class SchedulesConnection {
+    edges: ScheduleEdge[];
+    pageInfo: PageInfo;
+    totalCount: number;
+}
+
+export class ScheduleEdge {
+    node: Schedule;
+    cursor: string;
+}
+
+export class SchedulePayload {
+    errors?: Nullable<Nullable<ErrorPayload>[]>;
+    schedule?: Nullable<Schedule>;
+}
+
+export class DeleteSchedulePayload {
+    errors?: Nullable<Nullable<ErrorPayload>[]>;
+    count?: Nullable<number>;
+}
+
 export class User {
     id: string;
     firstName: string;
     lastName: string;
     email: EmailAddress;
     password: string;
-    photo: string;
-    isVerified: boolean;
-    isActive: boolean;
+    avatar: string;
+    googleId: string;
+    role: Roles;
+    verified: boolean;
+    active: boolean;
+    devices?: Nullable<DevicesConnection>;
     createdAt: Date;
     updatedAt: Date;
     version: number;

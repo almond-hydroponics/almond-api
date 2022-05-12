@@ -1,16 +1,20 @@
-import { IsString, IsBoolean } from 'class-validator';
+import { IsString, IsBoolean, Length } from 'class-validator';
 
 export class DeviceDto {
 	readonly id?: string;
 
 	@IsString()
+	@Length(7, 7, { message: 'Device name should have only 7 characters.' })
 	readonly name?: string;
 
-	@IsBoolean()
-	readonly isVerified?: boolean;
+	@IsString()
+	readonly user?: string;
 
 	@IsBoolean()
-	readonly isActive?: boolean;
+	readonly verified?: boolean;
+
+	@IsBoolean()
+	readonly active?: boolean;
 
 	readonly createdAt?: string;
 	readonly updatedAt?: string;

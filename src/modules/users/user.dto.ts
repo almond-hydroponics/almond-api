@@ -1,4 +1,5 @@
 import { IsEmail, IsString, MinLength, IsBoolean } from 'class-validator';
+import { Roles } from '../../graphql.schema';
 
 export class UserDto {
 	readonly id?: string;
@@ -17,13 +18,18 @@ export class UserDto {
 	readonly password?: string;
 
 	@IsString()
-	readonly photo?: string;
+	readonly avatar?: string;
+
+	@IsString()
+	readonly googleId?: string;
+
+	readonly role?: Roles;
 
 	@IsBoolean()
-	readonly isVerified?: boolean;
+	readonly verified?: boolean;
 
 	@IsBoolean()
-	readonly isActive?: boolean;
+	readonly active?: boolean;
 
 	readonly createdAt?: string;
 	readonly updatedAt?: string;

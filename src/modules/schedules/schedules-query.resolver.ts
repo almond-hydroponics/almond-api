@@ -6,33 +6,35 @@ import { isEmpty, merge } from 'lodash';
 import { PinoLogger } from 'nestjs-pino';
 import { lastValueFrom } from 'rxjs';
 
-import { IUsersService } from './users.interface';
-import { User, UsersConnection } from '../../graphql.schema';
+import { ISchedulesService } from './schedules.interface';
+import { Schedule, SchedulesConnection } from '../../graphql.schema';
 
 import { QueryUtils } from '../../utils/query.utils';
 import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
-import { CurrentUser } from '../auth/user.decorator';
 
-@Resolver('User')
-export class UsersQueryResolver implements OnModuleInit {
+@Resolver('Schedule')
+export class SchedulesQueryResolver implements OnModuleInit {
 	constructor(
-		@Inject('UsersServiceClient')
-		private readonly usersServiceClient: ClientGrpcProxy,
+		@Inject('SchedulesServiceClient')
+		private readonly schedulesServiceClient: ClientGrpcProxy,
 		private readonly queryUtils: QueryUtils,
 		private readonly logger: PinoLogger,
 	) {
-		logger.setContext(UsersQueryResolver.name);
+		logger.setContext(SchedulesQueryResolver.name);
 	}
-	private usersService: IUsersService;
+
+	private schedulesService: ISchedulesService;
 
 	onModuleInit(): void {
-		this.usersService =
-			this.usersServiceClient.getService<IUsersService>('UsersService');
+		this.schedulesService =
+			this.schedulesServiceClient.getService<ISchedulesService>(
+				'SchedulesService',
+			);
 	}
 
-	@Query('users')
+	@Query('schedules')
 	@UseGuards(GqlAuthGuard)
-	async getUsers(
+	async getSchedules(
 		@Args('q') q: string,
 		@Args('first') first: number,
 		@Args('last') last: number,
@@ -40,10 +42,10 @@ export class UsersQueryResolver implements OnModuleInit {
 		@Args('after') after: string,
 		@Args('filterBy') filterBy: any,
 		@Args('orderBy') orderBy: string,
-	): Promise<UsersConnection> {
+	): Promise<SchedulesConnection> {
 		const query = { where: {} };
 
-		if (!isEmpty(q)) merge(query, { where: { email: { _iLike: q } } });
+		// if (!isEmpty(q)) merge(query, { where: { name: { _iLike: q } } });
 
 		merge(
 			query,
@@ -58,22 +60,22 @@ export class UsersQueryResolver implements OnModuleInit {
 		);
 
 		return lastValueFrom(
-			this.usersService.find({
+			this.schedulesService.find({
 				...query,
 				where: JSON.stringify(query.where),
 			}),
 		);
 	}
 
-	@Query('user')
+	@Query('schedule')
 	@UseGuards(GqlAuthGuard)
-	async getUser(@Args('id') id: string): Promise<User> {
-		return lastValueFrom(this.usersService.findById({ id }));
+	async getSchedule(@Args('id') id: string): Promise<Schedule> {
+		return lastValueFrom(this.schedulesService.findById({ id }));
 	}
 
-	@Query('userCount')
+	@Query('schedulesCount')
 	@UseGuards(GqlAuthGuard)
-	async getUserCount(
+	async getSchedulesCount(
 		@Args('q') q: string,
 		@Args('filterBy') filterBy: any,
 	): Promise<number> {
@@ -84,18 +86,12 @@ export class UsersQueryResolver implements OnModuleInit {
 		merge(query, await this.queryUtils.getFilters(filterBy));
 
 		const { count } = await lastValueFrom(
-			this.usersService.count({
+			this.schedulesService.count({
 				...query,
 				where: JSON.stringify(query.where),
 			}),
 		);
 
 		return count;
-	}
-
-	@Query('me')
-	@UseGuards(GqlAuthGuard)
-	async getProfile(@CurrentUser() user: User): Promise<User> {
-		return lastValueFrom(this.usersService.findById({ id: user.id }));
 	}
 }

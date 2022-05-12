@@ -1,4 +1,6 @@
 type Subscription {
   # Devices Subscription
   deviceAdded: Device!
+  # Schedules Subscription
+  scheduleAdded: Device!
 }

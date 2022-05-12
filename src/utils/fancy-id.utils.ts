@@ -17,7 +17,7 @@ export class FancyIdUtils implements IFancyId {
 		// timestamp to prevent collisions with other clients.  We store the last characters we
 		// generated because in the event of a collision, we'll use those same characters except
 		// "incremented" by one.
-		let lastRandChars = [];
+		const lastRandChars = [];
 
 		let now = new Date().getTime();
 		const duplicateTime = now === lastPushTime;

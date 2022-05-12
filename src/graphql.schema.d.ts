@@ -7,14 +7,35 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export enum Roles {
+    USER = "USER",
+    DEVELOPER = "DEVELOPER",
+    ADMIN = "ADMIN"
+}
+
 export interface CreateDeviceInput {
     name: string;
 }
 
 export interface UpdateDeviceInput {
     name?: Nullable<string>;
-    isVerified?: Nullable<boolean>;
-    isActive?: Nullable<boolean>;
+    user?: Nullable<string>;
+    verified?: Nullable<boolean>;
+    active?: Nullable<boolean>;
+}
+
+export interface CreateScheduleInput {
+    schedule: string;
+    device: string;
+}
+
+export interface UpdateScheduleInput {
+    schedule?: Nullable<string>;
+    active?: Nullable<boolean>;
+}
+
+export interface SocialAuthInput {
+    code: string;
 }
 
 export interface SignupUserInput {
@@ -33,9 +54,9 @@ export interface UpdateProfileInput {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     email?: Nullable<EmailAddress>;
-    photo?: Nullable<string>;
-    isVerified?: Nullable<boolean>;
-    isActive?: Nullable<boolean>;
+    avatar?: Nullable<string>;
+    verified?: Nullable<boolean>;
+    active?: Nullable<boolean>;
 }
 
 export interface UpdateEmailInput {
@@ -61,6 +82,9 @@ export interface IMutation {
     createDevice(data: CreateDeviceInput): DevicePayload | Promise<DevicePayload>;
     updateDevice(id: string, data: UpdateDeviceInput): DevicePayload | Promise<DevicePayload>;
     deleteDevice(id: string): DeleteDevicePayload | Promise<DeleteDevicePayload>;
+    createSchedule(data: CreateScheduleInput): SchedulePayload | Promise<SchedulePayload>;
+    updateSchedule(id: string, data: UpdateScheduleInput): SchedulePayload | Promise<SchedulePayload>;
+    deleteSchedule(id: string): DeleteSchedulePayload | Promise<DeleteSchedulePayload>;
 }
 
 export interface IQuery {
@@ -72,10 +96,16 @@ export interface IQuery {
     devices(q?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, before?: Nullable<string>, after?: Nullable<string>, filterBy?: Nullable<JSONObject>, orderBy?: Nullable<string>): Nullable<DevicesConnection> | Promise<Nullable<DevicesConnection>>;
     deviceCount(q?: Nullable<string>, filterBy?: Nullable<JSONObject>): number | Promise<number>;
     myDevice(q?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, before?: Nullable<string>, after?: Nullable<string>, filterBy?: Nullable<JSONObject>, orderBy?: Nullable<string>): Nullable<DevicesConnection> | Promise<Nullable<DevicesConnection>>;
+    getGoogleAuthURL(): string | Promise<string>;
+    googleAuth(input?: Nullable<SocialAuthInput>): UserPayload | Promise<UserPayload>;
+    schedule(id: string): Schedule | Promise<Schedule>;
+    schedules(q?: Nullable<string>, first?: Nullable<number>, last?: Nullable<number>, before?: Nullable<string>, after?: Nullable<string>, filterBy?: Nullable<JSONObject>, orderBy?: Nullable<string>): Nullable<SchedulesConnection> | Promise<Nullable<SchedulesConnection>>;
+    schedulesCount(q?: Nullable<string>, filterBy?: Nullable<JSONObject>): number | Promise<number>;
 }
 
 export interface ISubscription {
     deviceAdded(): Device | Promise<Device>;
+    scheduleAdded(): Device | Promise<Device>;
 }
 
 export interface ErrorPayload {
@@ -93,8 +123,10 @@ export interface PageInfo {
 export interface Device {
     id: string;
     name: string;
-    isVerified: boolean;
-    isActive: boolean;
+    verified: boolean;
+    active: boolean;
+    user?: Nullable<User>;
+    schedules?: Nullable<SchedulesConnection>;
     createdAt: Date;
     updatedAt: Date;
     version: number;
@@ -121,15 +153,49 @@ export interface DeleteDevicePayload {
     count?: Nullable<number>;
 }
 
+export interface Schedule {
+    id: string;
+    schedule: string;
+    device: Device;
+    active: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    version: number;
+}
+
+export interface SchedulesConnection {
+    edges: ScheduleEdge[];
+    pageInfo: PageInfo;
+    totalCount: number;
+}
+
+export interface ScheduleEdge {
+    node: Schedule;
+    cursor: string;
+}
+
+export interface SchedulePayload {
+    errors?: Nullable<Nullable<ErrorPayload>[]>;
+    schedule?: Nullable<Schedule>;
+}
+
+export interface DeleteSchedulePayload {
+    errors?: Nullable<Nullable<ErrorPayload>[]>;
+    count?: Nullable<number>;
+}
+
 export interface User {
     id: string;
     firstName: string;
     lastName: string;
     email: EmailAddress;
     password: string;
-    photo: string;
-    isVerified: boolean;
-    isActive: boolean;
+    avatar: string;
+    googleId: string;
+    role: Roles;
+    verified: boolean;
+    active: boolean;
+    devices?: Nullable<DevicesConnection>;
     createdAt: Date;
     updatedAt: Date;
     version: number;

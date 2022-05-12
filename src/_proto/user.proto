@@ -10,12 +10,14 @@ message User {
   string lastName = 3;
   string email = 4;
   string password = 5;
-  string photo = 6;
-  bool isActive = 7;
-  bool isVerified = 8;
-  string createdAt = 9;
-  string updatedAt = 10;
-  int32 version = 11;
+  string avatar = 6;
+  string googleId = 7;
+  string role = 8;
+  bool active = 9;
+  bool verified = 10;
+  string createdAt = 11;
+  string updatedAt = 12;
+  int32 version = 13;
 }
 
 message UserEdge {

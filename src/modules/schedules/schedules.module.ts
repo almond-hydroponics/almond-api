@@ -9,37 +9,35 @@ import {
 } from '@nestjs/microservices';
 import { PubSub } from 'graphql-subscriptions';
 
-import { DevicesTypeResolver } from './devices-type.resolver';
-import { DevicesQueryResolver } from './devices-query.resolver';
-import { DevicesMutationResolver } from './devices-mutation.resolver';
-import { DevicesSubscriptionResolver } from './devices-subscription.resolver';
+import { SchedulesTypeResolver } from './schedules-type.resolver';
+import { SchedulesQueryResolver } from './schedules-query.resolver';
+import { SchedulesMutationResolver } from './schedules-mutation.resolver';
+import { SchedulesSubscriptionResolver } from './schedules-subscription.resolver';
 
 import { UtilsModule } from '../../utils/utils.module';
-import { UsersModule } from '../users/users.module';
-import { SchedulesModule } from '../schedules/schedules.module';
+import { DevicesModule } from '../devices/devices.module';
 
 @Module({
 	imports: [
 		ConfigModule,
 		LoggerModule,
 		UtilsModule,
-		forwardRef(() => UsersModule),
-		forwardRef(() => SchedulesModule),
+		forwardRef(() => DevicesModule),
 	],
 	providers: [
-		DevicesTypeResolver,
-		DevicesQueryResolver,
-		DevicesMutationResolver,
-		DevicesSubscriptionResolver,
+		SchedulesTypeResolver,
+		SchedulesQueryResolver,
+		SchedulesMutationResolver,
+		SchedulesSubscriptionResolver,
 		{
-			provide: 'DevicesServiceClient',
+			provide: 'SchedulesServiceClient',
 			useFactory: (configService: ConfigService): ClientGrpcProxy => {
 				return ClientProxyFactory.create({
 					transport: Transport.GRPC,
 					options: {
-						url: configService.get<string>('ALMOND_DEVICE_URL'),
-						package: 'device',
-						protoPath: join(__dirname, '../../_proto/device.proto'),
+						url: configService.get<string>('ALMOND_SCHEDULE_URL'),
+						package: 'schedule',
+						protoPath: join(__dirname, '../../_proto/schedule.proto'),
 						loader: {
 							keepCase: true,
 							enums: String,
@@ -56,6 +54,6 @@ import { SchedulesModule } from '../schedules/schedules.module';
 			useValue: new PubSub(),
 		},
 	],
-	exports: ['DevicesServiceClient'],
+	exports: ['SchedulesServiceClient'],
 })
-export class DevicesModule {}
+export class SchedulesModule {}

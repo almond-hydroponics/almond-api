@@ -13,9 +13,15 @@ import { UsersQueryResolver } from './users-query.resolver';
 import { UsersMutationResolver } from './users-mutation.resolver';
 
 import { UtilsModule } from '../../utils/utils.module';
+import { DevicesModule } from '../devices/devices.module';
 
 @Module({
-	imports: [ConfigModule, LoggerModule, UtilsModule],
+	imports: [
+		ConfigModule,
+		LoggerModule,
+		UtilsModule,
+		forwardRef(() => DevicesModule),
+	],
 	providers: [
 		UsersTypeResolver,
 		UsersQueryResolver,

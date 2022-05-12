@@ -10,7 +10,7 @@ import { IDevicesService } from './devices.interface';
 import { Device, DevicesConnection } from '../../graphql.schema';
 
 import { QueryUtils } from '../../utils/query.utils';
-import { GqlAuthGuard } from '../auth/gql-auth.guard';
+import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
 
 @Resolver('Device')
 export class DevicesQueryResolver implements OnModuleInit {
