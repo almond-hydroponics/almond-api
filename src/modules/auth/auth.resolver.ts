@@ -21,6 +21,7 @@ import {
 	UserPayload,
 } from '../../graphql.schema';
 import deepClean from '../../utils/deep-clean';
+import { ConfigService } from '@nestjs/config';
 
 @Resolver()
 export class AuthResolver implements OnModuleInit {
@@ -30,6 +31,7 @@ export class AuthResolver implements OnModuleInit {
 		private readonly authService: AuthService,
 		private readonly passwordUtils: PasswordUtils,
 		private readonly logger: PinoLogger,
+		private readonly configService: ConfigService,
 	) {
 		logger.setContext(AuthResolver.name);
 	}
@@ -75,6 +77,7 @@ export class AuthResolver implements OnModuleInit {
 			{
 				httpOnly: true,
 				maxAge: 1.8e6,
+				sameSite: 'lax',
 			},
 		);
 
@@ -138,14 +141,20 @@ export class AuthResolver implements OnModuleInit {
 			{
 				httpOnly: true,
 				maxAge: 1.8e6,
+				sameSite: 'lax',
+				// path: '/',
+				domain: this.configService.get<string>('COOKIES_DOMAIN'),
 			},
 		);
+
 		res.cookie(
 			'refresh-token',
 			await this.authService.generateRefreshToken(user),
 			{
 				httpOnly: true,
 				maxAge: 1.728e8,
+				// path: '/',
+				domain: this.configService.get<string>('COOKIES_DOMAIN'),
 			},
 		);
 
