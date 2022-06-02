@@ -1,21 +1,21 @@
 import { join } from 'path';
-import { forwardRef, Module } from '@nestjs/common';
+
+import { Module, forwardRef } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { LoggerModule } from 'nestjs-pino';
 import {
+	ClientGrpcProxy,
 	ClientProxyFactory,
 	Transport,
-	ClientGrpcProxy,
 } from '@nestjs/microservices';
 import { PubSub } from 'graphql-subscriptions';
-
-import { SchedulesTypeResolver } from './schedules-type.resolver';
-import { SchedulesQueryResolver } from './schedules-query.resolver';
-import { SchedulesMutationResolver } from './schedules-mutation.resolver';
-import { SchedulesSubscriptionResolver } from './schedules-subscription.resolver';
+import { LoggerModule } from 'nestjs-pino';
 
 import { UtilsModule } from '../../utils/utils.module';
 import { DevicesModule } from '../devices/devices.module';
+import { SchedulesMutationResolver } from './schedules-mutation.resolver';
+import { SchedulesQueryResolver } from './schedules-query.resolver';
+import { SchedulesSubscriptionResolver } from './schedules-subscription.resolver';
+import { SchedulesTypeResolver } from './schedules-type.resolver';
 
 @Module({
 	imports: [

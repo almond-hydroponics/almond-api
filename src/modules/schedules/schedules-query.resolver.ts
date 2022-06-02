@@ -1,16 +1,14 @@
 import { Inject, OnModuleInit, UseGuards } from '@nestjs/common';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-import { Query, Resolver, Args } from '@nestjs/graphql';
-
 import { isEmpty, merge } from 'lodash';
 import { PinoLogger } from 'nestjs-pino';
 import { lastValueFrom } from 'rxjs';
 
-import { ISchedulesService } from './schedules.interface';
 import { Schedule, SchedulesConnection } from '../../graphql.schema';
-
 import { QueryUtils } from '../../utils/query.utils';
 import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
+import { ISchedulesService } from './schedules.interface';
 
 @Resolver('Schedule')
 export class SchedulesQueryResolver implements OnModuleInit {

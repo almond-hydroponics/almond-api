@@ -1,14 +1,13 @@
-import { PassportStrategy } from '@nestjs/passport';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Injectable, OnModuleInit, Inject } from '@nestjs/common';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-
-import { PinoLogger } from 'nestjs-pino';
+import { PassportStrategy } from '@nestjs/passport';
 import { get } from 'lodash';
-import { Strategy, ExtractJwt } from 'passport-jwt';
+import { PinoLogger } from 'nestjs-pino';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 
-import { IUsersService } from '../users/users.interface';
 import { User } from '../../graphql.schema';
+import { IUsersService } from '../users/users.interface';
 
 @Injectable()
 export class JwtStrategy

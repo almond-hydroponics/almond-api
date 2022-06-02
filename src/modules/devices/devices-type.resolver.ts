@@ -1,16 +1,15 @@
 import { Inject, OnModuleInit } from '@nestjs/common';
-import { Parent, ResolveField, Resolver, Args } from '@nestjs/graphql';
+import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-
-import { PinoLogger } from 'nestjs-pino';
-
-import { QueryUtils } from '../../utils/query.utils';
-import { IUsersService } from '../users/users.interface';
-import { ISchedulesService } from '../schedules/schedules.interface';
-import { SchedulesConnection, User } from '../../graphql.schema';
-import { lastValueFrom } from 'rxjs';
-import { DeviceDto } from './device.dto';
 import { isEmpty, merge } from 'lodash';
+import { PinoLogger } from 'nestjs-pino';
+import { lastValueFrom } from 'rxjs';
+
+import { SchedulesConnection, User } from '../../graphql.schema';
+import { QueryUtils } from '../../utils/query.utils';
+import { ISchedulesService } from '../schedules/schedules.interface';
+import { IUsersService } from '../users/users.interface';
+import { DeviceDto } from './device.dto';
 
 @Resolver('Device')
 export class DevicesTypeResolver implements OnModuleInit {

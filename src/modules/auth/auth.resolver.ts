@@ -1,18 +1,11 @@
 import { Inject, OnModuleInit, UseGuards } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-import { Resolver, Args, Mutation, Context, Query } from '@nestjs/graphql';
-
 import { isEmpty } from 'lodash';
 import { PinoLogger } from 'nestjs-pino';
-
-import { AuthService } from './auth.service';
-import { RefreshAuthGuard } from './guards/refresh-auth.guard';
-import { CurrentUser } from './user.decorator';
-
-import { IUsersService } from '../users/users.interface';
-
-import { PasswordUtils } from '../../utils/password.utils';
 import { lastValueFrom } from 'rxjs';
+
 import {
 	LoginUserInput,
 	SignupUserInput,
@@ -21,7 +14,11 @@ import {
 	UserPayload,
 } from '../../graphql.schema';
 import deepClean from '../../utils/deep-clean';
-import { ConfigService } from '@nestjs/config';
+import { PasswordUtils } from '../../utils/password.utils';
+import { IUsersService } from '../users/users.interface';
+import { AuthService } from './auth.service';
+import { RefreshAuthGuard } from './guards/refresh-auth.guard';
+import { CurrentUser } from './user.decorator';
 
 @Resolver()
 export class AuthResolver implements OnModuleInit {

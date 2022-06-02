@@ -2,8 +2,8 @@ import { ConfigService } from '@nestjs/config';
 import { TerminusModule } from '@nestjs/terminus';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { HealthController } from './health.controller';
 import { HealthService } from '../services';
+import { HealthController } from './health.controller';
 
 describe('HealthController', () => {
 	let controller: HealthController;

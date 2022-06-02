@@ -1,14 +1,13 @@
 import { Inject, OnModuleInit } from '@nestjs/common';
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-
 import { PinoLogger } from 'nestjs-pino';
-
-import { QueryUtils } from '../../utils/query.utils';
-import { Device } from '../../graphql.schema';
 import { lastValueFrom } from 'rxjs';
-import { ScheduleDto } from './schedule.dto';
+
+import { Device } from '../../graphql.schema';
+import { QueryUtils } from '../../utils/query.utils';
 import { IDevicesService } from '../devices/devices.interface';
+import { ScheduleDto } from './schedule.dto';
 
 @Resolver('Schedule')
 export class SchedulesTypeResolver implements OnModuleInit {

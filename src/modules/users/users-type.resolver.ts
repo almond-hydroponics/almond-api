@@ -1,14 +1,13 @@
 import { Inject, OnModuleInit } from '@nestjs/common';
+import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-import { Resolver, Args, Parent, ResolveField } from '@nestjs/graphql';
-
 import { isEmpty, merge } from 'lodash';
 import { PinoLogger } from 'nestjs-pino';
+import { lastValueFrom } from 'rxjs';
 
+import { DevicesConnection, User } from '../../graphql.schema';
 import { QueryUtils } from '../../utils/query.utils';
 import { IDevicesService } from '../devices/devices.interface';
-import { DevicesConnection, User } from '../../graphql.schema';
-import { lastValueFrom } from 'rxjs';
 
 @Resolver('User')
 export class UsersTypeResolver implements OnModuleInit {

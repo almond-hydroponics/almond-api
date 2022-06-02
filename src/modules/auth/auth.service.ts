@@ -1,9 +1,9 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { PinoLogger } from 'nestjs-pino';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { google, Auth } from 'googleapis';
+import { JwtService } from '@nestjs/jwt';
 import axios from 'axios';
+import { Auth, google } from 'googleapis';
+import { PinoLogger } from 'nestjs-pino';
 
 import { User } from '../../graphql.schema';
 

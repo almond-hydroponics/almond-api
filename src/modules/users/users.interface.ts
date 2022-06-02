@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
 import { Metadata } from 'grpc';
-
-import { IId, IQuery, ICount } from '../../common/common.interface';
-import { UserDto } from './user.dto';
+import { Observable } from 'rxjs';
 import { User, UsersConnection } from 'src/graphql.schema';
+
+import { ICount, IId, IQuery } from '../../common/common.interface';
+import { UserDto } from './user.dto';
 
 interface UpdateUserInput {
 	id: string;

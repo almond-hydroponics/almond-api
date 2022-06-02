@@ -1,16 +1,14 @@
 import { Inject, OnModuleInit, UseGuards } from '@nestjs/common';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-import { Query, Resolver, Args } from '@nestjs/graphql';
-
 import { isEmpty, merge } from 'lodash';
 import { PinoLogger } from 'nestjs-pino';
 import { lastValueFrom } from 'rxjs';
 
-import { IDevicesService } from './devices.interface';
 import { Device, DevicesConnection } from '../../graphql.schema';
-
 import { QueryUtils } from '../../utils/query.utils';
 import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
+import { IDevicesService } from './devices.interface';
 
 @Resolver('Device')
 export class DevicesQueryResolver implements OnModuleInit {

@@ -7,8 +7,9 @@
  * @UseGuards(AdminGuard)
  */
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { Observable } from 'rxjs';
+
 import { Roles } from '../../../types/enums';
 
 @Injectable()

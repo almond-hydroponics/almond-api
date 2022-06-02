@@ -1,22 +1,22 @@
 import { join } from 'path';
-import { forwardRef, Module } from '@nestjs/common';
+
+import { Module, forwardRef } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { LoggerModule } from 'nestjs-pino';
 import {
+	ClientGrpcProxy,
 	ClientProxyFactory,
 	Transport,
-	ClientGrpcProxy,
 } from '@nestjs/microservices';
 import { PubSub } from 'graphql-subscriptions';
-
-import { DevicesTypeResolver } from './devices-type.resolver';
-import { DevicesQueryResolver } from './devices-query.resolver';
-import { DevicesMutationResolver } from './devices-mutation.resolver';
-import { DevicesSubscriptionResolver } from './devices-subscription.resolver';
+import { LoggerModule } from 'nestjs-pino';
 
 import { UtilsModule } from '../../utils/utils.module';
-import { UsersModule } from '../users/users.module';
 import { SchedulesModule } from '../schedules/schedules.module';
+import { UsersModule } from '../users/users.module';
+import { DevicesMutationResolver } from './devices-mutation.resolver';
+import { DevicesQueryResolver } from './devices-query.resolver';
+import { DevicesSubscriptionResolver } from './devices-subscription.resolver';
+import { DevicesTypeResolver } from './devices-type.resolver';
 
 @Module({
 	imports: [

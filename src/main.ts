@@ -1,22 +1,21 @@
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import {
 	ExpressAdapter,
 	NestExpressApplication,
 } from '@nestjs/platform-express';
-import { ConfigService } from '@nestjs/config';
-import { Logger } from 'nestjs-pino';
-
-import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser';
 import * as csurf from 'csurf';
+import helmet from 'helmet';
+import { Logger } from 'nestjs-pino';
 
 import { ExceptionFilter } from './_helpers';
-import { ValidationPipe } from '@nestjs/common';
+import { AppModule } from './app.module';
 import { ExcludeNullInterceptor, TimeoutInterceptor } from './interceptors';
 import { csurfConfigOptions } from './security/configs';
-import { csrfMiddleware } from './security/middlewares';
 import { FrontendCookieGuard } from './security/guards';
+import { csrfMiddleware } from './security/middlewares';
 
 (async function main() {
 	const app: NestExpressApplication =

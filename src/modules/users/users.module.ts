@@ -1,19 +1,19 @@
 import { join } from 'path';
+
 import { Module, forwardRef } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { LoggerModule } from 'nestjs-pino';
 import {
+	ClientGrpcProxy,
 	ClientProxyFactory,
 	Transport,
-	ClientGrpcProxy,
 } from '@nestjs/microservices';
-
-import { UsersTypeResolver } from './users-type.resolver';
-import { UsersQueryResolver } from './users-query.resolver';
-import { UsersMutationResolver } from './users-mutation.resolver';
+import { LoggerModule } from 'nestjs-pino';
 
 import { UtilsModule } from '../../utils/utils.module';
 import { DevicesModule } from '../devices/devices.module';
+import { UsersMutationResolver } from './users-mutation.resolver';
+import { UsersQueryResolver } from './users-query.resolver';
+import { UsersTypeResolver } from './users-type.resolver';
 
 @Module({
 	imports: [

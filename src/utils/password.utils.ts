@@ -1,7 +1,6 @@
-import { compare, hash } from 'bcryptjs';
-
-import { isEmpty } from 'lodash';
 import { Injectable } from '@nestjs/common';
+import { compare, hash } from 'bcryptjs';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class PasswordUtils {

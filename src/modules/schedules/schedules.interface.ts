@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
 import { Metadata } from 'grpc';
+import { Observable } from 'rxjs';
 
-import { IQuery, ICount, IId } from '../../common/common.interface';
-import { ScheduleDto } from './schedule.dto';
+import { ICount, IId, IQuery } from '../../common/common.interface';
 import { Schedule, SchedulesConnection } from '../../graphql.schema';
+import { ScheduleDto } from './schedule.dto';
 
 interface UpdateScheduleInput {
 	id: string;

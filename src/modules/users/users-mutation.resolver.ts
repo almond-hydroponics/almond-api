@@ -1,14 +1,9 @@
 import { Inject, OnModuleInit, UseGuards } from '@nestjs/common';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-import { Resolver, Args, Mutation } from '@nestjs/graphql';
 import { PinoLogger } from 'nestjs-pino';
 import { lastValueFrom } from 'rxjs';
 
-import { IUsersService } from './users.interface';
-
-import { PasswordUtils } from '../../utils/password.utils';
-import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
-import { CurrentUser } from '../auth/user.decorator';
 import {
 	DeleteAccountPayload,
 	UpdateEmailInput,
@@ -17,6 +12,10 @@ import {
 	User,
 	UserPayload,
 } from '../../graphql.schema';
+import { PasswordUtils } from '../../utils/password.utils';
+import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
+import { CurrentUser } from '../auth/user.decorator';
+import { IUsersService } from './users.interface';
 
 @Resolver()
 export class UsersMutationResolver implements OnModuleInit {

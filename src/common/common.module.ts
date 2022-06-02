@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
-import Redis, { RedisOptions } from 'ioredis';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
+import Redis, { RedisOptions } from 'ioredis';
+
 import { DateScalar } from './scalars/date.scalar';
 
 @Module({

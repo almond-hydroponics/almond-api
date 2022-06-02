@@ -1,23 +1,22 @@
 import { join } from 'path';
 
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { RedisCache } from 'apollo-server-cache-redis';
-import { LoggerModule, PinoLogger } from 'nestjs-pino';
-
 import {
 	DateTimeResolver,
 	EmailAddressResolver,
 	UnsignedIntResolver,
 } from 'graphql-scalars';
 import { GraphQLJSONObject } from 'graphql-type-json';
+import { LoggerModule, PinoLogger } from 'nestjs-pino';
 
-import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 import { CommonModule } from './common/common.module';
-import { MicroservicesModules } from './modules';
+import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 import { HealthModule } from './health/health.module';
+import { MicroservicesModules } from './modules';
 
 @Module({
 	imports: [

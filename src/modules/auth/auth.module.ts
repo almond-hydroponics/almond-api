@@ -1,16 +1,15 @@
 import { Module, forwardRef } from '@nestjs/common';
-import { LoggerModule } from 'nestjs-pino';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PassportModule } from '@nestjs/passport';
 import { JwtService } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { LoggerModule } from 'nestjs-pino';
 
-import { AuthService } from './auth.service';
-import { AuthResolver } from './auth.resolver';
-import { JwtStrategy } from './jwt.strategy';
-import { JwtRefreshStrategy } from './jwt-refresh.strategy';
-
-import { UsersModule } from '../users/users.module';
 import { UtilsModule } from '../../utils/utils.module';
+import { UsersModule } from '../users/users.module';
+import { AuthResolver } from './auth.resolver';
+import { AuthService } from './auth.service';
+import { JwtRefreshStrategy } from './jwt-refresh.strategy';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
 	imports: [

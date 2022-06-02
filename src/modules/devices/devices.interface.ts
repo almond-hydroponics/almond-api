@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
 import { Metadata } from 'grpc';
+import { Observable } from 'rxjs';
 
-import { IId, IQuery, ICount } from '../../common/common.interface';
+import { ICount, IId, IQuery } from '../../common/common.interface';
+import { Device, DevicesConnection } from '../../graphql.schema';
 import { DeviceDto } from './device.dto';
-import { DevicesConnection, Device } from '../../graphql.schema';
 
 interface UpdateDeviceInput {
 	id: string;

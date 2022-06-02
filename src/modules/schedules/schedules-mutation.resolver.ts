@@ -1,20 +1,18 @@
 import { Inject, OnModuleInit, UseGuards } from '@nestjs/common';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-import { Resolver, Args, Mutation } from '@nestjs/graphql';
-
-import { PinoLogger } from 'nestjs-pino';
 import { PubSub } from 'graphql-subscriptions';
+import { PinoLogger } from 'nestjs-pino';
+import { lastValueFrom } from 'rxjs';
 
-import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
-
-import { ISchedulesService } from './schedules.interface';
-import { ScheduleDto } from './schedule.dto';
 import {
 	DeleteSchedulePayload,
 	SchedulePayload,
 	UpdateDeviceInput,
 } from '../../graphql.schema';
-import { lastValueFrom } from 'rxjs';
+import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
+import { ScheduleDto } from './schedule.dto';
+import { ISchedulesService } from './schedules.interface';
 
 @Resolver('Schedule')
 export class SchedulesMutationResolver implements OnModuleInit {

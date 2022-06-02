@@ -1,20 +1,18 @@
 import { Inject, OnModuleInit, UseGuards } from '@nestjs/common';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { ClientGrpcProxy } from '@nestjs/microservices';
-import { Resolver, Args, Mutation } from '@nestjs/graphql';
-
-import { PinoLogger } from 'nestjs-pino';
 import { PubSub } from 'graphql-subscriptions';
+import { PinoLogger } from 'nestjs-pino';
+import { lastValueFrom } from 'rxjs';
 
-import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
-
-import { IDevicesService } from './devices.interface';
-import { DeviceDto } from './device.dto';
 import {
 	DeleteDevicePayload,
 	DevicePayload,
 	UpdateDeviceInput,
 } from '../../graphql.schema';
-import { lastValueFrom } from 'rxjs';
+import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
+import { DeviceDto } from './device.dto';
+import { IDevicesService } from './devices.interface';
 
 @Resolver('Device')
 export class DevicesMutationResolver implements OnModuleInit {

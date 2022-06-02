@@ -1,4 +1,5 @@
-import { IsEmail, IsString, MinLength, IsBoolean } from 'class-validator';
+import { IsBoolean, IsEmail, IsString, MinLength } from 'class-validator';
+
 import { Roles } from '../../graphql.schema';
 
 export class UserDto {

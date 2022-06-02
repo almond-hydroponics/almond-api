@@ -1,8 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { Resolver, Subscription } from '@nestjs/graphql';
-
-import { PinoLogger } from 'nestjs-pino';
 import { PubSub } from 'graphql-subscriptions';
+import { PinoLogger } from 'nestjs-pino';
+
 import { Device } from '../../graphql.schema';
 
 @Resolver('Device')
